@@ -85,16 +85,26 @@ template <class... T> inline Tuple<T...> makeTuple(T&&... args)
 }
 
 // Files
-// TODO: Deprecated, use file class
+// TODO(David): Deprecated, use file class
 using std::ifstream;
 using std::ofstream;
 using std::fstream;
+
+// type_info comparator for std::map
+struct type_info_comparator
+{
+    bool operator ()(const std::type_info* a, const std::type_info* b) const
+    {
+        return a->before(*b);
+    }
+};
 
 // Containers
 template <class T> using Vector = std::vector<T>;
 template <class T> using List = std::list<T>;
 template <class K, class T> using Map = std::map<K, T>;
 template <class K, class T> using HashMap = std::unordered_map<K, T>;
+template <class T> using TypeMap = std::unordered_map<const std::type_info*, T>;
 
 NAMESPACE_END
 
